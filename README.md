@@ -1,2 +1,6 @@
-# oficina_integracao2
-Repositório criado para a criação do projeto da disciplina de Oficina de Integração 2
+# Oficina de Integração 2
+
+Alunos: Jair Brann Junior, Mateus Borreiro Sanches, Lucas Moraes Camacho
+
+Requisitos Funcionais
+- 
