@@ -18,9 +18,3 @@
 - [React](https://reactjs.org)
 - [Typescript](https://www.typescriptlang.org/)
 - [Knex](https://knexjs.org/)
-
-## Requisitos funcionais
-- 
-
-## Projeto
-- 
