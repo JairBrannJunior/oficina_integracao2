@@ -3,7 +3,7 @@
 </h4>
 
 <h4 align="center">
-  Alunos: Jair Brann Junior, Mateus Borreiro Sanches
+  Alunos: Jair Brann Junior, Mateus Borreiro Sanches, João Wicktor Ortiz De Campos
 </h4>
 
 <p align="center">
