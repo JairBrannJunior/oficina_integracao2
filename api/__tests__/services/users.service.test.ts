@@ -21,7 +21,7 @@ describe('UsersService', () => {
       password: await bcrypt.hash(user.password, 10),
     };
 
-    jest.spyOn(usersService, 'createUser').mockReturnValueOnce(Promise.resolve(insertedUser));
+    jest.spyOn(usersService, 'createUser').mockReturnValueOnce(Promise.resolve(insertedUser) as any);
 
     expect(await usersService.createUser(user)).toBe(insertedUser);
   });
@@ -38,7 +38,7 @@ describe('UsersService', () => {
         id: 1,
         name: 'test',
         email: 'test@test.com',
-      })
+      } as any)
     );
 
     let existingUser;

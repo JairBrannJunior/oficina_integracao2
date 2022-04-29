@@ -1,6 +1,21 @@
-import { DataTypes } from 'sequelize';
+import { BuildOptions, DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database';
 import bcrypt from 'bcrypt';
+
+interface UserAttributes {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface UserInstance extends Model<UserAttributes>, UserAttributes {}
+
+type UserModelStatic = typeof Model & {
+  new (values?: object, options?: BuildOptions): UserInstance;
+};
 
 const User = sequelize.define(
   'user',
@@ -36,6 +51,6 @@ const User = sequelize.define(
       },
     },
   }
-);
+) as UserModelStatic;
 
 export default User;
