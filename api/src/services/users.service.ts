@@ -1,8 +1,9 @@
 import User from '../models/User';
+import usersRepository from '../repositories/users.repository';
 import { Exception } from '../utils/exception';
 
 const createUser = async (payload: any) => {
-  const existingUser = await User.findOne({ where: { email: payload.email } });
+  const existingUser = await usersRepository.findByEmail(payload.email);
 
   if (existingUser) {
     throw new Exception({
