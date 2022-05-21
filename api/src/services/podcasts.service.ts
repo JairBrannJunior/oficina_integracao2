@@ -31,8 +31,22 @@ const addPodcast = async (userId: number, podcast: IPodcast) => {
   return newPodcast;
 };
 
+const deletePodcastById = async (userId: number, podcastId: number) => {
+  const deletedPodcast = await podcastsRepository.deleteById(userId, podcastId);
+
+  if (deletedPodcast === 0) {
+    throw new Exception({
+      status: 404,
+      message: 'Podcast not found',
+    });
+  }
+
+  return deletedPodcast;
+};
+
 export default {
   listPodcastsByUser,
   getPodcastById,
   addPodcast,
+  deletePodcastById,
 };

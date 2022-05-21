@@ -99,7 +99,7 @@ describe('PodcastsService', () => {
       expect(error.statusCode).toEqual(403);
       expect(error.message).toEqual('This podcast is not linked to your account');
     }
-  })
+  });
 
   it('should add podcast', async () => {
     const userId = 1;
@@ -125,5 +125,28 @@ describe('PodcastsService', () => {
     jest.spyOn(podcastsRepository, 'add').mockReturnValueOnce(Promise.resolve(newPodcast) as any);
 
     expect(await podcastsService.addPodcast(userId, podcast)).toEqual(newPodcast);
-  })
+  });
+
+  it('should delete podcast', async () => {
+    const podcastId = 1;
+    const userId = 1;
+
+    jest.spyOn(podcastsRepository, 'deleteById').mockReturnValueOnce(Promise.resolve(1) as any);
+
+    expect(await podcastsService.deletePodcastById(userId, podcastId)).toEqual(1);
+  });
+
+  it('should throw exception when podcast not found on delete', async () => {
+    const podcastId = 1;
+    const userId = 1;
+
+    jest.spyOn(podcastsRepository, 'deleteById').mockReturnValueOnce(Promise.resolve(0) as any);
+
+    try {
+      await podcastsService.deletePodcastById(userId, podcastId);
+    } catch (error: any) {
+      expect(error.statusCode).toEqual(404);
+      expect(error.message).toEqual('Podcast not found');
+    }
+  });
 });
