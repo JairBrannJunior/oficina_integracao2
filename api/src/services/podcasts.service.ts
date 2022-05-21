@@ -1,3 +1,4 @@
+import { IPodcast } from '../interfaces/podcast.interface';
 import podcastsRepository from '../repositories/podcasts.repository';
 import { Exception } from '../utils/exception';
 
@@ -25,7 +26,13 @@ const getPodcastById = async (userId: number, podcastId: number) => {
   return podcast;
 };
 
+const addPodcast = async (userId: number, podcast: IPodcast) => {
+  const newPodcast = await podcastsRepository.add(userId, podcast);
+  return newPodcast;
+};
+
 export default {
   listPodcastsByUser,
   getPodcastById,
+  addPodcast,
 };

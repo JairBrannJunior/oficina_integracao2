@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { IPodcast } from '../interfaces/podcast.interface';
 import podcastsService from '../services/podcasts.service';
 
 const listPodcastsByUser = async (req: Request, res: Response) => {
@@ -31,7 +32,22 @@ const getPodcastById = async (req: Request, res: Response) => {
   }
 };
 
+const addPodcast = async (req: Request<{}, {}, IPodcast>, res: Response) => {
+  try {
+    const newPodcast = await podcastsService.addPodcast(req.userId, req.body);
+    res.status(201).send(newPodcast);
+  } catch (error: any) {
+    res.status(error.statusCode).send({
+      error: {
+        statusCode: error.statusCode,
+        message: error.message,
+      },
+    });
+  }
+}
+
 export default {
   listPodcastsByUser,
   getPodcastById,
+  addPodcast,
 };

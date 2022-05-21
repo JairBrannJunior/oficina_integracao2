@@ -3,16 +3,14 @@ import { sequelize } from '../database';
 import User from './User';
 
 interface PodcastAttributes {
-  id: number;
+  id?: number;
   title: string;
-  members: string;
+  members?: string;
   publishedAt: Date;
-  thumbnail: string;
-  description: string;
+  thumbnail?: string;
+  description?: string;
   fileUrl: string;
   userId: number;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 interface PodcastInstance extends Model<PodcastAttributes>, PodcastAttributes {}
