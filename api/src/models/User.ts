@@ -1,6 +1,7 @@
 import { BuildOptions, DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database';
 import bcrypt from 'bcrypt';
+import Podcast from './Podcast';
 
 interface UserAttributes {
   id: number;
@@ -52,5 +53,8 @@ const User = sequelize.define(
     },
   }
 ) as UserModelStatic;
+
+User.hasMany(Podcast);
+Podcast.belongsTo(User);
 
 export default User;
