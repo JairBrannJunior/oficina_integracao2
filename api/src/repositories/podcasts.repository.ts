@@ -16,8 +16,18 @@ const add = async (userId: number, podcast: IPodcast) => {
   });
 };
 
+const updateById = async (userId: number, podcastId: number, podcast: Partial<IPodcast>) => {
+  return Podcast.update(podcast, { where: { id: podcastId, userId } });
+};
+
+const deleteById = async (userId: number, podcastId: number) => {
+  return Podcast.destroy({ where: { id: podcastId, userId } });
+};
+
 export default {
   listByUserId,
   getById,
   add,
+  updateById,
+  deleteById,
 };

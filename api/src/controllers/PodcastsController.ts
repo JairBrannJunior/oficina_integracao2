@@ -44,10 +44,42 @@ const addPodcast = async (req: Request<{}, {}, IPodcast>, res: Response) => {
       },
     });
   }
-}
+};
+
+const updatePodcastById = async (req: Request, res: Response) => {
+  const { podcastId } = req.params;
+  try {
+    await podcastsService.updatePodcastById(req.userId, Number(podcastId), req.body as Partial<IPodcast>);
+    res.status(200).send();
+  } catch (error: any) {
+    res.status(error.statusCode).send({
+      error: {
+        statusCode: error.statusCode,
+        message: error.message,
+      },
+    });
+  }
+};
+
+const deletePodcastById = async (req: Request, res: Response) => {
+  const { podcastId } = req.params;
+  try {
+    await podcastsService.deletePodcastById(req.userId, Number(podcastId));
+    res.status(200).send();
+  } catch (error: any) {
+    res.status(error.statusCode).send({
+      error: {
+        statusCode: error.statusCode,
+        message: error.message,
+      },
+    });
+  }
+};
 
 export default {
   listPodcastsByUser,
   getPodcastById,
   addPodcast,
+  updatePodcastById,
+  deletePodcastById,
 };
