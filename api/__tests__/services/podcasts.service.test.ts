@@ -127,6 +127,45 @@ describe('PodcastsService', () => {
     expect(await podcastsService.addPodcast(userId, podcast)).toEqual(newPodcast);
   });
 
+  it('should update podcast', async () => {
+    const userId = 1;
+    const podcastId = 1;
+
+    const newPodcastInfo: Partial<IPodcast> = {
+      title: 'test2',
+      description: 'test',
+      publishedAt: new Date(),
+      fileUrl: 'http://test.com/test.mp3',
+      duration: 4237,
+    };
+
+    jest.spyOn(podcastsRepository, 'updateById').mockReturnValueOnce(Promise.resolve([1]) as any);
+
+    expect(await podcastsService.updatePodcastById(userId, podcastId, newPodcastInfo)).toEqual(1);
+  });
+
+  it('should throw exception when podcast not found on edit', async () => {
+    const userId = 1;
+    const podcastId = 1;
+
+    const newPodcastInfo: Partial<IPodcast> = {
+      title: 'test2',
+      description: 'test',
+      publishedAt: new Date(),
+      fileUrl: 'http://test.com/test.mp3',
+      duration: 4237,
+    };
+
+    jest.spyOn(podcastsRepository, 'updateById').mockReturnValueOnce(Promise.resolve([0]) as any);
+
+    try {
+      await podcastsService.updatePodcastById(userId, podcastId, newPodcastInfo);
+    } catch (error: any) {
+      expect(error.statusCode).toEqual(404);
+      expect(error.message).toEqual('Podcast not found');
+    }
+  });
+
   it('should delete podcast', async () => {
     const podcastId = 1;
     const userId = 1;
