@@ -1,3 +1,4 @@
+import { IPodcast } from '../../src/interfaces/podcast.interface';
 import podcastsRepository from '../../src/repositories/podcasts.repository';
 import podcastsService from '../../src/services/podcasts.service';
 
@@ -98,5 +99,31 @@ describe('PodcastsService', () => {
       expect(error.statusCode).toEqual(403);
       expect(error.message).toEqual('This podcast is not linked to your account');
     }
+  })
+
+  it('should add podcast', async () => {
+    const userId = 1;
+    const dateNow = new Date();
+    const podcast: IPodcast = {
+      title: 'test',
+      description: 'test',
+      publishedAt: dateNow,
+      fileUrl: 'http://test.com/test.mp3',
+      duration: 4237,
+    };
+
+    const newPodcast = {
+      id: 1,
+      title: 'test',
+      description: 'test',
+      publishedAt: dateNow,
+      fileUrl: 'http://test.com/test.mp3',
+      duration: 4237,
+      userId,
+    };
+
+    jest.spyOn(podcastsRepository, 'add').mockReturnValueOnce(Promise.resolve(newPodcast) as any);
+
+    expect(await podcastsService.addPodcast(userId, podcast)).toEqual(newPodcast);
   })
 });
