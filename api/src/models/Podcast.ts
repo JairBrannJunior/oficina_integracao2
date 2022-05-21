@@ -10,6 +10,7 @@ interface PodcastAttributes {
   thumbnail: string;
   description: string;
   fileUrl: string;
+  userId: number;
   createdAt: Date;
   updatedAt: Date;
 }
