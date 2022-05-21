@@ -19,7 +19,7 @@ const listPodcastsByUser = async (req: Request, res: Response) => {
 const getPodcastById = async (req: Request, res: Response) => {
   const { podcastId } = req.params;
   try {
-    const podcast = await podcastsService.getPodcastById(Number(podcastId));
+    const podcast = await podcastsService.getPodcastById(req.userId, Number(podcastId));
     res.status(200).send(podcast);
   } catch (error: any) {
     res.status(error.statusCode).send({

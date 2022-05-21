@@ -45,6 +45,7 @@ describe('PodcastsService', () => {
 
   it('should get podcast by id', async () => {
     const podcastId = 1;
+    const userId = 1;
 
     const podcast = {
       id: 1,
@@ -58,19 +59,44 @@ describe('PodcastsService', () => {
 
     jest.spyOn(podcastsRepository, 'getById').mockReturnValueOnce(Promise.resolve(podcast) as any);
 
-    expect(await podcastsService.getPodcastById(podcastId)).toEqual(podcast);
+    expect(await podcastsService.getPodcastById(userId, podcastId)).toEqual(podcast);
   });
 
   it('should throw exception when podcast not found', async () => {
     const podcastId = 1;
+    const userId = 1;
 
     jest.spyOn(podcastsRepository, 'getById').mockReturnValueOnce(Promise.resolve(null) as any);
 
     try {
-      await podcastsService.getPodcastById(podcastId);
+      await podcastsService.getPodcastById(userId, podcastId);
     } catch (error: any) {
       expect(error.statusCode).toEqual(404);
       expect(error.message).toEqual('Podcast not found');
     }
   });
+
+  it('should throw exception when podcast is not linked to user', async () => {
+    const podcastId = 1;
+    const userId = 1;
+
+    const podcast = {
+      id: 1,
+      title: 'test',
+      description: 'test',
+      publishedAt: new Date(),
+      fileUrl: 'http://test.com/test.mp3',
+      duration: 4237,
+      userId: 2,
+    };
+
+    jest.spyOn(podcastsRepository, 'getById').mockReturnValueOnce(Promise.resolve(podcast) as any);
+
+    try {
+      await podcastsService.getPodcastById(userId, podcastId);
+    } catch (error: any) {
+      expect(error.statusCode).toEqual(403);
+      expect(error.message).toEqual('This podcast is not linked to your account');
+    }
+  })
 });
